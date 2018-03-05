@@ -28,21 +28,20 @@ temp_grad = zeros(size(theta));
 % for j = 1:size(theta),
 % 	partial_grad = 0;
 % 	for i = 1:size(y),
-% 		partial_grad = partial_grad + ((sigmoid(X(i, :) * theta) - y(i)) * X(i, :));
+% 		partial_grad = partial_grad + ((sigmoid(X(i, :) * theta) - y(i)) * X(i, j));
 % 	end
 % 	temp_grad(j) = sum(partial_grad)/m;
 % end
 
 % ====================== INNER FOR VECTORIZED ======================
-
 % for j = 1:size(theta),
-% 	temp_grad(j) = sum(sum((sigmoid(X * theta) - y) .* X/m));
+% 	temp_grad(j) = ((sigmoid(X * theta) - y)' * X(:, j))/m;
 % end
 
 % ====================== FINAL VERSION :D ======================
 
 J = (-y'*log(sigmoid(X * theta)) - (1 - y')*log(1 - sigmoid(X * theta)))/m;
-grad = sum((sigmoid(X * theta) - y) .* X/m) * theta;
+grad = ((sigmoid(X * theta) - y)' * X)'/m;
 
 % =============================================================
 
