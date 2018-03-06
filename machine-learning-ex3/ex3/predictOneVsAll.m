@@ -12,10 +12,14 @@ m = size(X, 1);
 num_labels = size(all_theta, 1);
 
 % You need to return the following variables correctly 
-p = zeros(size(X, 1), 1);
+% p = zeros(size(X, 1), 1);
 
 % Add ones to the X data matrix
 X = [ones(m, 1) X];
+
+predictions = sigmoid(X * all_theta');
+[values, indexes] = max(predictions, [], 2);
+p = indexes;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Complete the following code to make predictions using

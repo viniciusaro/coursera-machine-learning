@@ -36,9 +36,9 @@ m = length(y); % number of training examples
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-theta_without_first = theta(2:size(theta)(1, 1));
+theta_without_first = theta(2:end);
 cost_regularization_factor = (lambda/(2*m)) * sum([0; theta_without_first] .^ 2);
-grad_regularization_factor = (lambda/m)*[0; theta_without_first];
+grad_regularization_factor = (lambda/m) * [0; theta_without_first];
 
 J = (-y'*log(sigmoid(X * theta)) - (1 - y')*log(1 - sigmoid(X * theta)))/m;
 grad = ((sigmoid(X * theta) - y)' * X)'/m;
