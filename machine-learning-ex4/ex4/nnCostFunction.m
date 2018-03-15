@@ -44,10 +44,14 @@ for i = 1:m,
 	Y(i, y(i)) = 1;
 end
 
-J = sum(sum(-Y.*log(H) - (1 - Y).*log(1 - H))) / m;
+regularization = (lambda / (2 * m)) * ( sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2)) );
+
+J = sum(sum(-Y.*log(H) - (1 - Y).*log(1 - H))) / m + regularization;
 
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
+
+
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
