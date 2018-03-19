@@ -28,15 +28,11 @@ m = size(X, 1);
 % Setup number of classes
 K = num_labels;
 
-% You need to return the following variables correctly 
-J = 0;
-
 A1 = [ones(m, 1) X];
-Z1 = A1 * Theta1';
-A2 = sigmoid(Z1);
-A2 = [ones(size(A2, 1), 1) A2];
-Z2 = A2 * Theta2';
-A3 = sigmoid(Z2);
+Z2 = A1 * Theta1';
+A2 = [ones(size(Z2, 1), 1) sigmoid(Z2)];
+Z3 = A2 * Theta2';
+A3 = sigmoid(Z3);
 H = A3;
 
 Y = zeros(m, K);
@@ -48,10 +44,15 @@ regularization = (lambda / (2 * m)) * ( sum(sum(Theta1(:, 2:end) .^ 2)) + sum(su
 
 J = sum(sum(-Y.*log(H) - (1 - Y).*log(1 - H))) / m + regularization;
 
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+d3 = A3 - Y;
+d2 = (d3 * Theta2) .* sigmoidGradient([ones(size(Z2, 1), 1) Z2]);
+d2 = d2(:, 2:end);
 
+D1 = (d2'*A1);
+D2 = (d3'*A2);
 
+Theta1_grad = D1/m;
+Theta2_grad = D2/m;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
